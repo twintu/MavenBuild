@@ -11,17 +11,9 @@ node('master') {
 		sh "mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent install -Pcoverage-per-test"
 	}
 
-	stage ('Sonar Analysis'){
-		//sh 'mvn sonar:sonar -Dsonar.host.url=http://35.153.67.119:9000 -Dsonar.login=77467cfd2653653ad3b35463fbfdb09285f08be5'
-	}
-
 	stage ('Archive Artifacts'){
 		archiveArtifacts artifacts: 'target/*.war'
 	}
-	
-	//stage ('Deployment'){
-	//	deploy adapters: [tomcat9(credentialsId: 'TomcatCreds', path: '', url: 'http://18.234.188.179:8080/')], contextPath: 'counterwebapp', war: 'target/*.war'
-	//}
 	
 	stage ('Notification'){
 		emailext (
